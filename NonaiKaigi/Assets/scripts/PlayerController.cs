@@ -25,11 +25,40 @@ public class PlayerController : MonoBehaviour
         _currentLane = NoteManager.LaneType.MIDDLE;
     }
 
+    private bool _isPaused = false;
+    private bool _clearedStage = false;
+
+    public void SetClearStageWindow() {
+        _clearedStage = true;
+    }
+
     void Update()
     {
+        if (_clearedStage) {
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                //Load Scene
+            }
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if(!_isPaused) {
+                Time.timeScale = 0;
+                _isPaused = true;
+                ResultWindowManager.GetResultWindowManger.ShowResultWindow(true);
+            }
+            else {
+                Time.timeScale = 1;
+                _isPaused = false;
+                ResultWindowManager.GetResultWindowManger.ShowResultWindow(false);
+            }
+        }
+
+        if (_isPaused) return;
+
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
             var val = (NoteManager.LaneType)((int)_currentLane - 1);
-            if(val < 0) {
+            if (val < 0) {
                 _currentLane = NoteManager.LaneType.DOWN;
             }
             else {
@@ -40,15 +69,6 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             _currentLane = (NoteManager.LaneType)(((int)_currentLane + 1) % (int)NoteManager.LaneType.MAX);
             SetPos();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if(Time.timeScale != 0) {
-                Time.timeScale = 0;
-            }
-            else {
-                Time.timeScale = 1;
-            }
         }
     }
 }
