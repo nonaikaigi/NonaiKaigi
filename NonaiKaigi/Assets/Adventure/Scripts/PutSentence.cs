@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class PutSentence : MonoBehaviour
 {
     /// <summary>/// 文字送り速度/// </summary>
     float charFeedSpeed = 0.1f;
     /// <summary>/// 表示用のTextComponent/// </summary>
-    [SerializeField] TMP_Text text;
+    [SerializeField] Text text;
     /// <summary>/// /// </summary>
     //TextStorage textContena = new TextStorage();
     /// <summary>/// 現在表示している文字列/// </summary>
@@ -22,6 +22,7 @@ public class PutSentence : MonoBehaviour
     //public bool onoff;
     /// <summary>コルーチンを保存する</summary>
     IEnumerator feedCoroutine;
+    [SerializeField] Text nameArea;
     public bool End { get { return end; } set { end = value; } }
 
     void Awake()
@@ -32,7 +33,7 @@ public class PutSentence : MonoBehaviour
     public void Init()
     {
         text.text = "";
-
+        nameArea.text = "";
     }
 
 
@@ -58,14 +59,14 @@ public class PutSentence : MonoBehaviour
         End = true;
     }
     /// <summary>コルーチンを開始</summary>
-    public void CallSentence(string s)
+    public void CallSentence(string s, string n)
     {
+        nameArea.text = n;
         if (End)
         {
             feedCoroutine = SentenceFeed(s);
             StartCoroutine(feedCoroutine);
             End = false;
-
         }
         else
         {

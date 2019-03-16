@@ -7,7 +7,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ActorData", menuName = "CreActor")]
 public class TextActor : ScriptableObject
 {
-
     public CharName id;
     public string name;
 

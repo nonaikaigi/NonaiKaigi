@@ -10,18 +10,12 @@ public enum StageType
 {
     /// <summary>シーン遷移</summary>
     SceneTrans,
-    /// <summary>登場</summary>
-    Appear,
-    /// <summary>退場</summary>
-    Leave,
     /// <summary>画面の色変更</summary>
     Coloring,
     /// <summary>画面の色変更解除</summary>
     Clear,
     /// <summary>背景変更</summary>
     SwitchBack,
-    /// <summary>アイテム出現</summary>
-    Item,
     /// <summary>ウィンドウがポップする</summary>
     PopWindow,
 }
@@ -38,14 +32,14 @@ public class TextDirector : MonoBehaviour
 
     enum BackIndex
     {
-        Evening,
+        Morning,
         Noon,
-        Edge,
-
+        Evening,
+        Night,
     }
 
 
-    delegate void Stagings();
+    //delegate void Stagings();
     string[] contents;
     public List<GameObject> characters = new List<GameObject>();
     [SerializeField] TextManager textManager;
@@ -79,7 +73,17 @@ public class TextDirector : MonoBehaviour
         //Debug.Log(contents);
     }
 
+    public void Staging(string content)
+    {
+        DivideContent(content);
+        //StageType type;
 
+        if (Enum.TryParse(contents[(int)StageTag.Type], out StageType type))
+        {
+
+        }
+
+    }
 
 
     IEnumerator MoveObject(GameObject targetObj, Vector3 targetPos, float time, bool isNext = true)
@@ -162,7 +166,7 @@ public class TextDirector : MonoBehaviour
     void EndStaging()
     {
         textManager.isStaging = false;
-        textManager.TextsDraw();
+        //textManager.TextsDraw();
     }
 
     void ContinueStaging()

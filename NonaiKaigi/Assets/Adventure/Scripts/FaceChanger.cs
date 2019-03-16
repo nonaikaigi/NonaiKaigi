@@ -14,7 +14,7 @@ public class FaceChanger : MonoBehaviour
 
     }
 
-    public void InportSprite(Sprite[] sprites)
+    public void ImportSprite(Sprite[] sprites)
     {
         faceSprites = sprites;
         myFace.sprite = faceSprites[(int)FaceIndex.Normal];
