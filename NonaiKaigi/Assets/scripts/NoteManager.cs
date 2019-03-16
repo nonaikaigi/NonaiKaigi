@@ -25,29 +25,35 @@ public class NoteManager : MonoBehaviour
     [SerializeField] private RectTransform[] _lanes = null;
     public float GetLaneYPos(LaneType type) => _lanes[(int)type].position.y;
 
+    [SerializeField] private AudioClip _audioClip = null;
+    private AudioSource _audioSource = null;
+
     private void Awake() {
         _noteManager = this;
+        _moveSpeed = _noteSpeedObject.GetNoteSpeed(0).MoveSpeed;
+        _audioSource = this.gameObject.AddComponent<AudioSource>();
+        _audioSource.clip = _audioClip;
     }
 
-    private float _time = 0;
-
-    [SerializeField] private float _speed = 500;
+    [SerializeField] NoteSpeedObject _noteSpeedObject = null;
+    private float _moveSpeed = 0;
+    private float _generationTime = 0;
 
     public void ChangeSpeed(bool raiseSpeed) {
         if (raiseSpeed) {
-            _speed += 150;
+            _moveSpeed += _noteSpeedObject.GetNoteSpeed(0).MoveSpeed * 0.25f;
         }
         else {
-            _speed -= 150;
+            _moveSpeed -= _noteSpeedObject.GetNoteSpeed(0).MoveSpeed * 0.25f;
         }
 
-        _noteList.ForEach(note => note.ChangeSpeed(_speed));
+        _noteList.ForEach(note => note.ChangeSpeed(_moveSpeed));
     }
 
     void Update() {
-        _time += Time.deltaTime;
-        if(_time >= 1) {
-            _time = 0;
+        _generationTime += Time.deltaTime;
+        if(_generationTime >= _noteSpeedObject.GetNoteSpeed(0).GenerationSpeed) {
+            _generationTime = 0;
             Random.InitState(System.DateTime.Now.TimeOfDay.Milliseconds);
             var randomLane = Random.Range(0, (int)LaneType.MAX);
             Random.InitState(System.DateTime.Now.TimeOfDay.Seconds);
@@ -56,33 +62,37 @@ public class NoteManager : MonoBehaviour
             note.SetUpNote(
                 (LaneType)randomLane,   //LaneType
                 (NoteType)randomType,
-                _speed,                //Speed
+                _moveSpeed,                //Speed
                 new Vector2(_lanes[randomLane].position.x + _lanes[randomLane].rect.size.x / 2, _lanes[randomLane].position.y)      //Pos
                 );
 
             _noteList.Add(note);
         }
 
-        var Destroylist = new List<NoteController>();
-        var NotDestroyList = new List<NoteController>();
+        var destroylist = new List<NoteController>();
+        var notDestroyList = new List<NoteController>();
         _noteList.ForEach(note => {
             if(note.InCanDestroy && PlayerController.GetPlayer.CurrentLane == note.LaneType) {
-                Destroylist.Add(note);
+                destroylist.Add(note);
             }
             else if (note.InNotDestroy) {
-                NotDestroyList.Add(note);
+                notDestroyList.Add(note);
             }
         });
-
-        foreach(var dl in Destroylist) {
-            _noteList.Remove(dl);
-            Destroy(dl.gameObject);
+        if (destroylist.Count > 0) {
+            foreach (var dl in destroylist) {
+                _noteList.Remove(dl);
+                Destroy(dl.gameObject);
+            }
+            _audioSource.Play();
         }
 
-        foreach(var ndl in NotDestroyList) {
-            PointManager.GetPointManager.UpdateCharacterStatus(ndl.NoteType);
-            _noteList.Remove(ndl);
-            Destroy(ndl.gameObject);
+        if (notDestroyList.Count > 0) {
+            foreach (var ndl in notDestroyList) {
+                PointManager.GetPointManager.UpdateCharacterStatus(ndl.NoteType);
+                _noteList.Remove(ndl);
+                Destroy(ndl.gameObject);
+            }
         }
     }
 }
