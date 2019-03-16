@@ -14,6 +14,7 @@ public static class Keys
         End,
         Miss,
     }
+
     public static Dictionary<KeyTag, string> KeyList = new Dictionary<KeyTag, string>()
     {
         {KeyTag.Progress,"Progress" },

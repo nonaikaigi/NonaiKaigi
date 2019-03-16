@@ -8,10 +8,11 @@ public class FaceChanger : MonoBehaviour
     public CharName charName;
     [SerializeField] FaceIndex facer;
     public Sprite[] faceSprites = new Sprite[6];
-    Image myFace;
+    [SerializeField] Image[] faceImages = new Image[6];
+    [SerializeField] Image myFace;
     void Awake()
     {
-
+        ChangeFace(FaceIndex.Normal);
     }
 
     public void ImportSprite(Sprite[] sprites)
@@ -20,13 +21,30 @@ public class FaceChanger : MonoBehaviour
         myFace.sprite = faceSprites[(int)FaceIndex.Normal];
     }
 
-    public void ChangeFace(FaceIndex faceIndex)
+    //public void ChangeFace(FaceIndex faceIndex)
+    //{
+    //    myFace.sprite = faceSprites[(int)faceIndex];
+    //}
+    //public void ChangeFace(int faceIndex)
+    //{
+    //    myFace.sprite = faceSprites[faceIndex];
+    //}
+
+    public void ChangeFace(FaceIndex index)
     {
-        myFace.sprite = faceSprites[(int)faceIndex];
+        foreach (Image item in faceImages)
+        {
+            item.gameObject.SetActive(false);
+        }
+        faceImages[(int)index].gameObject.SetActive(true);
     }
-    public void ChangeFace(int faceIndex)
+    public void ChangeFace(int index)
     {
-        myFace.sprite = faceSprites[faceIndex];
+        foreach (Image item in faceImages)
+        {
+            item.gameObject.SetActive(false);
+        }
+        faceImages[index].gameObject.SetActive(true);
     }
 
 
@@ -34,7 +52,7 @@ public class FaceChanger : MonoBehaviour
     {
         charName = actor.id;
         faceSprites = actor.faces;
-        myFace = GetComponent<Image>();
+        //myFace = GetComponent<Image>();
         myFace.sprite = faceSprites[(int)FaceIndex.Normal];
     }
 }

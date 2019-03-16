@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class SceneChanger : MonoBehaviour
 {
+
+    public enum SceneTitle
+    {
+        Title,
+        Adventure,
+        Conference,
+        Result,
+
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +26,8 @@ public class SceneChanger : MonoBehaviour
     {
         
     }
+
+
+
+
 }
