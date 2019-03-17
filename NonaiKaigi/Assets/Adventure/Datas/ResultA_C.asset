@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texts:
   - cName: 0
-    sentence: 
+    sentence: "\u304A\u3044\u3057\u304B\u3063\u305F\u3051\u3069\u30FB\u30FB\u30FB"
     faceIndex: 0
   - cName: 0
-    sentence: 
-    faceIndex: 0
-  - cName: 0
-    sentence: 
+    sentence: "\u3075\u308F\u3075\u308F\u3057\u305F\u3082\u306E\u98DF\u3079\u305F\u304B\u3063\u305F\u304B\u3082\u30FB\u30FB\u30FB"
+    faceIndex: 3
+  - cName: 3
+    sentence: NextScene
     faceIndex: 0

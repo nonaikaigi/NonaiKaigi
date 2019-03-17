@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public static class SceneChanger
 {
 
     public enum SceneTitle
@@ -11,21 +12,16 @@ public class SceneChanger : MonoBehaviour
         Adventure,
         Conference,
         Result,
-
     }
-
-
-    // Start is called before the first frame update
-    void Start()
+    public static SceneTitle nowScene = SceneTitle.Title;
+    public static SceneTitle beforeScene = SceneTitle.Title;
+    public static void SceneChange(SceneTitle title)
     {
-        
+        beforeScene = nowScene;
+        nowScene = title;
+        SceneManager.LoadScene(title.ToString());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
 

@@ -29,7 +29,6 @@ public class Progress : MonoBehaviour
         A,
         B,
         C,
-        D,
         End,
     }
 
@@ -58,7 +57,7 @@ public class Progress : MonoBehaviour
         {ChoicePhase.A,Keys.KeyTag.ChoiceA },
         {ChoicePhase.B,Keys.KeyTag.ChoiceB },
         {ChoicePhase.C,Keys.KeyTag.ChoiceC },
-        {ChoicePhase.D,Keys.KeyTag.ChoiceD },
+        //{ChoicePhase.D,Keys.KeyTag.ChoiceD },
         {ChoicePhase.End,Keys.KeyTag.End },
     };
     /// <summary>特定の会議の結果を登録する</summary>

@@ -58,7 +58,7 @@ public class TextDirector : MonoBehaviour
     [SerializeField] Sprite[] BackSprites = new Sprite[4];
 
 
-    SceneChanger fader;
+    //SceneChanger fader;
     float moveTime = 0.5f;
 
     List<Vector3> targetPositions = new List<Vector3>()
@@ -79,11 +79,15 @@ public class TextDirector : MonoBehaviour
 
     void Awake()
     {
-        blackOut.SetActive(false);
+        SwitchColor(Color.black);
     }
 
     void Start()
     {
+        if (textManager.texts[0].cName != CharName.System)
+        {
+            StartCoroutine(ChangeColor(blackOut, Color.clear, 0.5f, false));
+        }
     }
 
 
@@ -142,6 +146,13 @@ public class TextDirector : MonoBehaviour
 
     void SceneTrans(string content)
     {
+        StartCoroutine(ChangeColor(blackOut, Color.black, 0.5f));
+        if (Enum.TryParse(content, out SceneChanger.SceneTitle title))
+        {
+
+            SceneChanger.SceneChange(title);
+
+        }
 
         Debug.Log(content);
         EndStaging();
@@ -187,6 +198,11 @@ public class TextDirector : MonoBehaviour
             blackOut.GetComponent<Image>().color = color;
         }
         EndStaging();
+    }
+    void SwitchColor(Color color)
+    {
+        blackOut.SetActive(true);
+        blackOut.GetComponent<Image>().color = color;
     }
     void Clear()
     {

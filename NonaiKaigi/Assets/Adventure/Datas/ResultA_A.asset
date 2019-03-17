@@ -15,13 +15,13 @@ MonoBehaviour:
   texts:
   - cName: 0
     sentence: "\u304A\u3044\u3057\u304B\u3063\u305F\uFF5E"
-    faceIndex: 0
+    faceIndex: 1
   - cName: 0
     sentence: "\u306A\u304B\u306A\u304B\u98DF\u3079\u3089\u308C\u306A\u3044\u304B\u3089\u306D\uFF01"
     faceIndex: 0
   - cName: 0
     sentence: "\u30FB\u30FB\u30FB\u3067\u3082\u3001\u3075\u308F\u3075\u308F\u3057\u305F\u3082\u306E\u304C\u826F\u304B\u3063\u305F\u306A\u3041\u30FB\u30FB\u30FB"
-    faceIndex: 0
-  - cName: 0
-    sentence: 
+    faceIndex: 3
+  - cName: 3
+    sentence: NextScene
     faceIndex: 0

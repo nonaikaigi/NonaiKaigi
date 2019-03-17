@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum FaceIndex
 {
-    Normal, Fun, Angry, Surprise, Suffer, Shout, Last
+    Normal, Fun, Suffer, Wry, Last
 }
 public enum PositionTag
 {
