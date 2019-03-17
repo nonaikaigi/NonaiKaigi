@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         if (_clearedStage) {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 //Load Scene
-
+                SceneChanger.SceneChange(SceneChanger.SceneTitle.Adventure);
             }
             return;
         }
