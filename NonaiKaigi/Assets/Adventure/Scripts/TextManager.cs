@@ -26,6 +26,7 @@ public class TextManager : MonoBehaviour
     [SerializeField] Sprite[] backs = new Sprite[4];
 
     [SerializeField] GameObject enter;
+    [SerializeField] GameObject autoObj;
 
     #region Mod
 
@@ -222,6 +223,14 @@ public class TextManager : MonoBehaviour
         else
         {
             enter.SetActive(false);
+        }
+        if (isAuto)
+        {
+            autoObj.SetActive(true);
+        }
+        else
+        {
+            autoObj.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
