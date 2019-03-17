@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d5917850f507243af2cc673d6b7d81, type: 3}
+  m_Name: ResultEnd_A
+  m_EditorClassIdentifier: 
+  texts:
+  - cName: 0
+    sentence: "\u3059\u3063\u3054\u304F\u305F\u306E\u3057\u304B\u3063\u305F\uFF01\u660E\u65E5\u3082\u904A\u307C\u3046\u306D\u2661"
+    faceIndex: 1
+  - cName: 0
+    sentence: "\u7D76\u5BFE\u3060\u3088\uFF1F"
+    faceIndex: 0
+  - cName: 0
+    sentence: "\u30EA\u30EA\u30A2\u3068\u306E\u7D04\u675F\u2661"
+    faceIndex: 1
+  - cName: 0
+    sentence: "\u660E\u65E5\u3082\u697D\u3057\u3044\u4E00\u65E5\u306B\u306A\u308A\u305D\u3046\uFF01"
+    faceIndex: 1
+  - cName: 0
+    sentence: "\u304A\u3084\u3059\u307F\u306A\u3055\u3044\u266A"
+    faceIndex: 1
+  - cName: 3
+    sentence: SceneTrans:Ending
+    faceIndex: 0

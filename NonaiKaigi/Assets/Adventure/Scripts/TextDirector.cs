@@ -54,7 +54,7 @@ public class TextDirector : MonoBehaviour
     //[SerializeField] GameObject[] popWindows;
     //[SerializeField] Transform popCanvas;
     [SerializeField] Image backGround;
-
+    [SerializeField] Progress progress;
     [SerializeField] Sprite[] BackSprites = new Sprite[4];
 
 
@@ -157,6 +157,14 @@ public class TextDirector : MonoBehaviour
         Debug.Log(content);
         EndStaging();
     }
+    void SceneTrans(SceneChanger.SceneTitle title)
+    {
+        StartCoroutine(ChangeColor(blackOut, Color.black, 0.5f));
+
+        SceneChanger.SceneChange(title);
+
+        EndStaging();
+    }
     void Move(string content)
     {
 
@@ -225,8 +233,57 @@ public class TextDirector : MonoBehaviour
         EndStaging();
     }
 
+    void SetConference(int i)
+    {
+        PlayerPrefs.SetInt(Keys.KeyList[Keys.KeyTag.StageType], i);
+        PlayerPrefs.Save();
+
+        SceneTrans(SceneChanger.SceneTitle.Conference);
+    }
+
+    void SetProgress(Progress.StoryProgress story)
+    {
+        progress.ThisStoryProgress = story;
+    }
+
     void NextScene()
     {
+        switch (progress.ThisStoryProgress)
+        {
+            case Progress.StoryProgress.TextA:
+                SetProgress(Progress.StoryProgress.ResultA);
+                SetConference(0);
+                break;
+            case Progress.StoryProgress.ResultA:
+                SetProgress(Progress.StoryProgress.TextB);
+                SceneTrans(SceneChanger.SceneTitle.Adventure);
+                break;
+            case Progress.StoryProgress.TextB:
+                SetProgress(Progress.StoryProgress.ResultB);
+                SetConference(1);
+                break;
+            case Progress.StoryProgress.ResultB:
+                SetProgress(Progress.StoryProgress.TextC);
+                SceneTrans(SceneChanger.SceneTitle.Adventure);
+                break;
+            case Progress.StoryProgress.TextC:
+                SetProgress(Progress.StoryProgress.ResultC);
+                SetConference(2);
+                break;
+            case Progress.StoryProgress.ResultC:
+                SetProgress(Progress.StoryProgress.TextEnd);
+                SceneTrans(SceneChanger.SceneTitle.Adventure);
+                break;
+            case Progress.StoryProgress.TextEnd:
+                SetProgress(Progress.StoryProgress.ResultEnd);
+                SceneTrans(SceneChanger.SceneTitle.Adventure);
+                break;
+            case Progress.StoryProgress.ResultEnd:
+                SceneTrans(SceneChanger.SceneTitle.Result);
+                break;
+            default:
+                break;
+        }
 
         EndStaging();
     }

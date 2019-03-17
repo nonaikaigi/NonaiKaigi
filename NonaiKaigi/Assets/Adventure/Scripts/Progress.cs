@@ -12,17 +12,15 @@ public class Progress : MonoBehaviour
         ResultB,
         TextC,
         ResultC,
-        TextD,
-        ResultD,
         TextEnd,
         ResultEnd,
     }
     public enum ChoiceTag
     {
-        Def,
         A,
         B,
         C,
+        Def,
     }
     public enum ChoicePhase
     {

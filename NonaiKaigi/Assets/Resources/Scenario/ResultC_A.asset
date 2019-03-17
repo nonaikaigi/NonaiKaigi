@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d5917850f507243af2cc673d6b7d81, type: 3}
+  m_Name: ResultC_A
+  m_EditorClassIdentifier: 
+  texts:
+  - cName: 0
+    sentence: "\u6C17\u6301\u3061\u3088\u304B\u3063\u305F\uFF5E\u266A"
+    faceIndex: 1
+  - cName: 0
+    sentence: "\u304A\u59C9\u3061\u3083\u3093\u306E\u304A\u80F8\u3001\u5927\u304D\u304F\u3066\u3084\u308F\u3089\u304B\u304B\u3063\u305F\u306A\u3041"
+    faceIndex: 0
+  - cName: 0
+    sentence: "\u4ECA\u65E5\u306F\u3050\u3063\u3059\u308A\u7720\u308C\u305D\u3046\u2661"
+    faceIndex: 1
+  - cName: 3
+    sentence: NextScene
+    faceIndex: 0
