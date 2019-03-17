@@ -9,6 +9,7 @@ public class ResultWindowFlavorText : ScriptableObject
 
     public string GetProblemText(int stageIdx) => _resultFlavorTextGroup[stageIdx].ProblemText;
     public string GetOptionText(int stageIdx, NoteManager.NoteType type) => _resultFlavorTextGroup[stageIdx].ResultFlavorTexts.Find(text => text.Type == type).OptionText;
+    public NoteManager.NoteType GetWorstType(int stageIdx) => _resultFlavorTextGroup[stageIdx].WorstOption;
     public ResultFlavorText GetResult(int stageIdx, NoteManager.NoteType type) => _resultFlavorTextGroup[stageIdx].ResultFlavorTexts.Find(text => text.Type == type);
 }
 
@@ -18,6 +19,9 @@ public class ResultFlavorTextGroup
     [SerializeField] private string _problemText = null;
     public string ProblemText => _problemText;
     public List<ResultFlavorText> ResultFlavorTexts = new List<ResultFlavorText>();
+    [SerializeField]
+    private NoteManager.NoteType _worstOption = default(NoteManager.NoteType);
+    public NoteManager.NoteType WorstOption => _worstOption;
 }
 
 [System.Serializable]
