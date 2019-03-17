@@ -16,12 +16,15 @@ public enum StageType
     Shake,
     /// <summary>画面の色変更</summary>
     Coloring,
+    /// <summary>画面の色変更</summary>
+    SwitchColor,
     /// <summary>画面の色変更解除</summary>
     Clear,
     /// <summary>背景変更</summary>
     SwitchBack,
     /// <summary>ウィンドウがポップする</summary>
     PopWindow,
+    NextScene,
 }
 
 public class TextDirector : MonoBehaviour
@@ -74,11 +77,13 @@ public class TextDirector : MonoBehaviour
 
 
 
-
+    void Awake()
+    {
+        blackOut.SetActive(false);
+    }
 
     void Start()
     {
-        blackOut.SetActive(false);
     }
 
 
@@ -113,6 +118,9 @@ public class TextDirector : MonoBehaviour
                 case StageType.Coloring:
                     Coloring(contents[(int)StageTag.Target]);
                     break;
+                case StageType.SwitchColor:
+                    SwitchColor(contents[(int)StageTag.Target]);
+                    break;
                 case StageType.Clear:
                     Clear();
                     break;
@@ -121,6 +129,9 @@ public class TextDirector : MonoBehaviour
                     break;
                 case StageType.PopWindow:
                     PopWindow(contents[(int)StageTag.Target]);
+                    break;
+                case StageType.NextScene:
+                    NextScene();
                     break;
                 default:
                     break;
@@ -156,6 +167,7 @@ public class TextDirector : MonoBehaviour
         if (ColorUtility.TryParseHtmlString(content, out color))
         {
             Debug.Log(color);
+            blackOut.SetActive(true);
             StartCoroutine(ChangeColor(blackOut, color, 0.5f));
 
         }
@@ -163,6 +175,18 @@ public class TextDirector : MonoBehaviour
     void Coloring(Color color)
     {
         StartCoroutine(ChangeColor(blackOut, color, 0.5f));
+    }
+    void SwitchColor(string content)
+    {
+        Debug.Log(content);
+        Color color;
+        if (ColorUtility.TryParseHtmlString(content, out color))
+        {
+            Debug.Log(color);
+            blackOut.SetActive(true);
+            blackOut.GetComponent<Image>().color = color;
+        }
+        EndStaging();
     }
     void Clear()
     {
@@ -185,7 +209,11 @@ public class TextDirector : MonoBehaviour
         EndStaging();
     }
 
+    void NextScene()
+    {
 
+        EndStaging();
+    }
 
 
 
@@ -255,7 +283,7 @@ public class TextDirector : MonoBehaviour
             fromColor.b += diffB * Time.deltaTime / time;
             fromColor.a += diffA * Time.deltaTime / time;
             targetObject.GetComponent<Image>().color = fromColor;
-            Debug.Log(fromColor);
+            //Debug.Log(fromColor);
             yield return null;
         }
         Debug.Log("end");

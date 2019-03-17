@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d5917850f507243af2cc673d6b7d81, type: 3}
+  m_Name: TextA
+  m_EditorClassIdentifier: 
+  texts:
+  - cName: 3
+    sentence: SwitchColor:#000000
+    faceIndex: 0
+  - cName: 0
+    sentence: 1
+    faceIndex: 0
+  - cName: 3
+    sentence: Clear
+    faceIndex: 0
+  - cName: 0
+    sentence: 2
+    faceIndex: 0
+  - cName: 0
+    sentence: 3
+    faceIndex: 0
+  - cName: 1
+    sentence: 4
+    faceIndex: 0
+  - cName: 0
+    sentence: 5
+    faceIndex: 0
+  - cName: 0
+    sentence: 6
+    faceIndex: 0
+  - cName: 0
+    sentence: 7
+    faceIndex: 0
+  - cName: 0
+    sentence: 8
+    faceIndex: 0
+  - cName: 0
+    sentence: 9
+    faceIndex: 0
+  - cName: 0
+    sentence: 10
+    faceIndex: 0
