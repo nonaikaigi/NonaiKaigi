@@ -8,6 +8,7 @@ public class ResultWindowFlavorText : ScriptableObject
     private List<ResultFlavorTextGroup> _resultFlavorTextGroup = new List<ResultFlavorTextGroup>();
 
     public string GetProblemText(int i) => _resultFlavorTextGroup[i].ProblemText;
+    public string GetOptionText(int i, NoteManager.NoteType type) => _resultFlavorTextGroup[i].ResultFlavorTexts.Find(text => text.Type == type).OptionText;
     public ResultFlavorText GetResult(int i, NoteManager.NoteType type) => _resultFlavorTextGroup[i].ResultFlavorTexts.Find(text => text.Type == type);
 }
 
@@ -25,6 +26,9 @@ public class ResultFlavorText
     [SerializeField]
     private NoteManager.NoteType _type = default(NoteManager.NoteType);
     public NoteManager.NoteType Type => _type;
+    [SerializeField, Multiline]
+    private string _optionText = null;
+    public string OptionText => _optionText;
     [SerializeField, Multiline]
     private string _resultText = null;
     public string ResultText => _resultText;

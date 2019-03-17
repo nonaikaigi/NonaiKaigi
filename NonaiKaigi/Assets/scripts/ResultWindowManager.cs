@@ -22,6 +22,7 @@ public class ResultWindowManager : MonoBehaviour
         for (int j = 0; j < _characterImages.Length; j++) {
             if((int)result.Type == j) {
                 _characterImages[j].sprite = result.ClearSprite;
+                _characterImages[j].GetComponentInChildren<Text>().transform.parent.gameObject.SetActive(false);
             }
             else {
                 _characterImages[j].gameObject.SetActive(false);
@@ -34,6 +35,9 @@ public class ResultWindowManager : MonoBehaviour
     private void Awake() {
         _resultWindowManager = this;
         ShowResultWindow(false);
+        for (int i = 0; i < _characterImages.Length; i++) {
+            _characterImages[i].GetComponentInChildren<Text>().text = _resultWindowFlavorText.GetOptionText(0, (NoteManager.NoteType)i);
+        }
         _textBox.text = _resultWindowFlavorText.GetProblemText(0);
     }
 }

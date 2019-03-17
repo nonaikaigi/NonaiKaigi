@@ -12,13 +12,19 @@ public class PointManager : MonoBehaviour
 
     [SerializeField] private FlavorTextObject _flavorTextObject = null;
 
+    [SerializeField] private Sprite[] _icons = null;
+
     //キャラクターを管理するクラス
     private class Character
     {
         public Image Image = null;
+        public Image Icon = null;
         public Text FText = null;
         public float PercentageVal = 0;
         public Text PercentageText = null;
+
+        private int _flavorIdx = 0;
+        private float _flavorTime = 0;
 
         private NoteManager.NoteType _myNoteType;
         public NoteManager.NoteType MyNoteType => _myNoteType;
@@ -27,6 +33,7 @@ public class PointManager : MonoBehaviour
 
         public Character(Transform t, NoteManager.NoteType type) {
             Image = t.Find("CharacterImage").GetComponent<Image>();
+            Icon = t.Find("Icon").GetComponent<Image>();
             FText = t.Find("FlavorText").GetComponentInChildren<Text>();
             PercentageText = t.Find("Percentage").GetComponentInChildren<Text>();
             _myNoteType = type;
@@ -34,7 +41,7 @@ public class PointManager : MonoBehaviour
             PercentageText.text = $"{PercentageVal}%";
 
             _status = FlavorText.CharacterStatus.Low;
-            FText.text = $"{GetPointManager._flavorTextObject.GetFlavorText(0, this._status, this._myNoteType)}";
+            FText.text = $"{GetPointManager._flavorTextObject.GetFlavorText(0, this._status, 0, this._myNoteType)}";
         }
 
         private const float _lowToNormal = 45;
@@ -82,7 +89,16 @@ public class PointManager : MonoBehaviour
             }
 
             if(status != _status) {
-                FText.text = GetPointManager._flavorTextObject.GetFlavorText(0, this._status, this._myNoteType);
+                FText.text = GetPointManager._flavorTextObject.GetFlavorText(0, this._status, _flavorIdx, this._myNoteType);
+            }
+        }
+
+        public void UpdateFlavorText() {
+            _flavorTime += Time.deltaTime;
+            if(_flavorTime >= 6.0f) {
+                _flavorTime = 0;
+                _flavorIdx = (_flavorIdx + 1) % 3;
+                FText.text = GetPointManager._flavorTextObject.GetFlavorText(0, this._status, _flavorIdx, this._myNoteType);
             }
         }
     }
@@ -99,6 +115,16 @@ public class PointManager : MonoBehaviour
                 c.UpdateStatus(false);
             }
         }
+        var highestCharacter = _characters.Aggregate((x, y) => x.PercentageVal >= y.PercentageVal ? x : y);
+        foreach(var chara in _characters) {
+            if(chara == highestCharacter) {
+                chara.Icon.sprite = _icons[0];
+            }
+            else {
+                chara.Icon.sprite = _icons[1];
+            }
+        }
+
     }
 
     [SerializeField] private Text _timerText = null;
@@ -203,6 +229,10 @@ public class PointManager : MonoBehaviour
             SaveData(highestCharacter);
             ResultWindowManager.GetResultWindowManger.SetStageClearResultWindow(0, highestCharacter.MyNoteType);
             PlayerController.GetPlayer.SetClearStageWindow();
+        }
+
+        foreach(var chara in _characters) {
+            chara.UpdateFlavorText();
         }
     }
 }

@@ -9,9 +9,9 @@ public class FlavorTextObject : ScriptableObject
     [SerializeField]
     private List<FlavorTextGroup> _flavorTextGroups = new List<FlavorTextGroup>();
 
-    public string GetFlavorText(int i, FlavorText.CharacterStatus status, NoteManager.NoteType type) {
-        var text = _flavorTextGroups[i]._flavorTexts.Find(t => t.Type == type);
-        return text.GetText((int)status);
+    public string GetFlavorText(int stageIdx, FlavorText.CharacterStatus status, int idx, NoteManager.NoteType type) {
+        var text = _flavorTextGroups[stageIdx]._flavorTexts.Find(t => t.Type == type);
+        return text.GetText(status, idx);
     }
 }
 
@@ -27,9 +27,27 @@ public class FlavorText
     [SerializeField]
     private NoteManager.NoteType _type = default(NoteManager.NoteType);
     public NoteManager.NoteType Type => _type;
-    [SerializeField, Multiline]
-    private string[] _text = null;
-    public string GetText(int i) => _text[i];
+    [SerializeField, Multiline, Header("Low")]
+    private string[] _lowStatustext = null;
+    [SerializeField, Multiline, Header("Normal")]
+    private string[] _normalStatustext = null;
+    [SerializeField, Multiline, Header("Super")]
+    private string[] _superStatustext = null;
+    public string GetText(CharacterStatus status, int i) {
+        if(status == CharacterStatus.Low) {
+            return _lowStatustext[i];
+        }
+        else if(status == CharacterStatus.Normal) {
+            return _normalStatustext[i];
+        }
+        else if(status == CharacterStatus.Super) {
+            return _superStatustext[i];
+        }
+        else {
+            Debug.Log("Wrong Type");
+            return null;
+        }
+    }
 
     public enum CharacterStatus
     {
