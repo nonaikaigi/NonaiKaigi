@@ -13,6 +13,13 @@ public enum CharName
 }
 public class TextManager : MonoBehaviour
 {
+    enum Times
+    {
+        hiru,
+        end,
+    }
+
+
     //List<CharName> characters = new List<CharName>();
 
     public List<TextStorage> texts = new List<TextStorage>();
@@ -27,7 +34,8 @@ public class TextManager : MonoBehaviour
 
     [SerializeField] GameObject enter;
     [SerializeField] GameObject autoObj;
-
+    [SerializeField] AudioClip[] clips;
+    [SerializeField] AudioSource source;
     #region Mod
 
     [SerializeField] GameObject textPiece;
@@ -100,6 +108,9 @@ public class TextManager : MonoBehaviour
     float stime = 0;
     float ftime = 0;
 
+
+    Times time = Times.hiru;
+
     private void Awake()
     {
         //progress.ThisStoryProgress = Progress.StoryProgress.TextA;
@@ -109,44 +120,64 @@ public class TextManager : MonoBehaviour
         {
             case Progress.StoryProgress.TextA:
                 SetText(progress.ThisStoryProgress);
+                time = Times.hiru;
                 SwitchBack(0);
                 break;
             case Progress.StoryProgress.ResultA:
                 index = (int)data.Find(x => x.Stage == 0).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                time = Times.hiru;
                 SwitchBack(0);
                 break;
             case Progress.StoryProgress.TextB:
                 SetText(progress.ThisStoryProgress);
+                time = Times.hiru;
                 SwitchBack(1);
                 break;
             case Progress.StoryProgress.ResultB:
                 index = (int)data.Find(x => x.Stage == 1).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                time = Times.hiru;
                 SwitchBack(1);
                 break;
             case Progress.StoryProgress.TextC:
                 SetText(progress.ThisStoryProgress);
+                time = Times.hiru;
                 SwitchBack(2);
                 break;
             case Progress.StoryProgress.ResultC:
                 index = (int)data.Find(x => x.Stage == 2).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                time = Times.hiru;
                 SwitchBack(2);
                 break;
             case Progress.StoryProgress.TextEnd:
                 SetText(progress.ThisStoryProgress);
+                time = Times.end;
                 SwitchBack(3);
                 break;
             case Progress.StoryProgress.ResultEnd:
                 SetText(progress.ThisStoryProgress, GetResult());
+                time = Times.end;
                 SwitchBack(3);
                 break;
             default:
                 break;
         }
         back.color = Color.white;
-
+        switch (time)
+        {
+            case Times.hiru:
+                source.clip = clips[0];
+                source.Play();
+                break;
+            case Times.end:
+                source.clip = clips[1];
+                source.Play();
+                break;
+            default:
+                break;
+        }
     }
 
     void SwitchBack(int i)

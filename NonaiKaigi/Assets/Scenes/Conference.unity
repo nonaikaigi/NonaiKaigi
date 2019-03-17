@@ -3837,7 +3837,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 798d2fd324c4d7b4d9b5e9d1a1381ca3, type: 3}
   - {fileID: 21300000, guid: 10e07067dcfea4f43821cb5da53c6608, type: 3}
   _timerText: {fileID: 659140937}
-  _timerVal: 30
+  _timerVal: 60
 --- !u!114 &1924509826
 MonoBehaviour:
   m_ObjectHideFlags: 0
