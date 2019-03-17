@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private NoteManager.LaneType _currentLane = default(NoteManager.LaneType);
     public NoteManager.LaneType CurrentLane => _currentLane;
 
+    private Animator _animator = null;
+    public Animator Animator => _animator;
+
     //_currentLaneの値に従って座標を決定する
     private void SetPos() {
         if(_currentLane == NoteManager.LaneType.MAX) {
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private void Awake() {
         _player = this;
         _currentLane = NoteManager.LaneType.MIDDLE;
+        _animator = GetComponent<Animator>();
     }
 
     private bool _isPaused = false;

@@ -91,6 +91,7 @@ public class NoteManager : MonoBehaviour
                 Destroy(dl.gameObject);
             }
             _audioSource.Play();
+            PlayerController.GetPlayer.Animator.Play("Cut");
         }
 
         if (notDestroyList.Count > 0) {

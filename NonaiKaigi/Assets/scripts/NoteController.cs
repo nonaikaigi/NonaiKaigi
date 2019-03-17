@@ -28,7 +28,7 @@ public class NoteController : MonoBehaviour
         var image = GetComponent<Image>();
         image.sprite = sprite;
         if(note == NoteManager.NoteType.A) {
-            image.color = Color.red;
+            image.color = Color.white;
         }
         else if(note == NoteManager.NoteType.B) {
             image.color = new Color(1, 0.68f, 0, 1);
