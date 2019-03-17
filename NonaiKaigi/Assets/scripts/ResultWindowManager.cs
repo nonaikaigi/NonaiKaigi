@@ -16,13 +16,15 @@ public class ResultWindowManager : MonoBehaviour
         gameObject.SetActive(show);
     }
 
-    public void SetStageClearResultWindow(int i, NoteManager.NoteType type) {
-        var result = _resultWindowFlavorText.GetResult(i, type);
+    [SerializeField] private Sprite _clearSprite = null;
+
+    public void SetStageClearResultWindow(int stageIdx, NoteManager.NoteType type) {
+        var result = _resultWindowFlavorText.GetResult(stageIdx, type);
         _textBox.text = result.ResultText;
         for (int j = 0; j < _characterImages.Length; j++) {
             if((int)result.Type == j) {
-                _characterImages[j].sprite = result.ClearSprite;
                 _characterImages[j].GetComponentInChildren<Text>().transform.parent.gameObject.SetActive(false);
+                _characterImages[j].transform.Find("Icon").GetComponent<Image>().sprite = _clearSprite;
             }
             else {
                 _characterImages[j].gameObject.SetActive(false);
@@ -32,12 +34,15 @@ public class ResultWindowManager : MonoBehaviour
         ShowResultWindow(true);
     }
 
-    private void Awake() {
-        _resultWindowManager = this;
+    public void InitializeResultWindow() {
         ShowResultWindow(false);
         for (int i = 0; i < _characterImages.Length; i++) {
-            _characterImages[i].GetComponentInChildren<Text>().text = _resultWindowFlavorText.GetOptionText(0, (NoteManager.NoteType)i);
+            _characterImages[i].GetComponentInChildren<Text>().text = _resultWindowFlavorText.GetOptionText(PointManager.GetPointManager.StageNum, (NoteManager.NoteType)i);
         }
-        _textBox.text = _resultWindowFlavorText.GetProblemText(0);
+        _textBox.text = _resultWindowFlavorText.GetProblemText(PointManager.GetPointManager.StageNum);
+    }
+
+    private void Awake() {
+        _resultWindowManager = this;
     }
 }

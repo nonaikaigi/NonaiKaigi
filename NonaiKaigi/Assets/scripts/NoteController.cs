@@ -21,15 +21,22 @@ public class NoteController : MonoBehaviour
     private NoteManager.NoteType _noteType = default(NoteManager.NoteType);
     public NoteManager.NoteType NoteType => _noteType;
 
-    public void SetUpNote(NoteManager.LaneType lane, NoteManager.NoteType note, float spd, Vector2 pos) {
+    public void SetUpNote(NoteManager.LaneType lane, NoteManager.NoteType note, Sprite sprite, float spd, Vector2 pos) {
         _laneType = lane;
         _noteType = note;
-        var color = new Color();
-        if (note == NoteManager.NoteType.A) color = Color.red;
-        else if (note == NoteManager.NoteType.B) color = Color.blue;
-        else color = Color.green;
 
-        GetComponent<Image>().color = color;
+        var image = GetComponent<Image>();
+        image.sprite = sprite;
+        if(note == NoteManager.NoteType.A) {
+            image.color = Color.red;
+        }
+        else if(note == NoteManager.NoteType.B) {
+            image.color = new Color(1, 0.68f, 0, 1);
+        }
+        else {
+            image.color = new Color(0.0172f, 1, 0, 1);
+        }
+
         _speed = spd;
         transform.position = pos;
     }

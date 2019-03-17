@@ -14,6 +14,9 @@ public class PointManager : MonoBehaviour
 
     [SerializeField] private Sprite[] _icons = null;
 
+    private int _stageNum = 0;
+    public int StageNum => _stageNum;
+
     //キャラクターを管理するクラス
     private class Character
     {
@@ -41,7 +44,7 @@ public class PointManager : MonoBehaviour
             PercentageText.text = $"{PercentageVal}%";
 
             _status = FlavorText.CharacterStatus.Low;
-            FText.text = $"{GetPointManager._flavorTextObject.GetFlavorText(0, this._status, 0, this._myNoteType)}";
+            FText.text = $"{GetPointManager._flavorTextObject.GetFlavorText(GetPointManager._stageNum, this._status, 0, this._myNoteType)}";
         }
 
         private const float _lowToNormal = 45;
@@ -89,7 +92,7 @@ public class PointManager : MonoBehaviour
             }
 
             if(status != _status) {
-                FText.text = GetPointManager._flavorTextObject.GetFlavorText(0, this._status, _flavorIdx, this._myNoteType);
+                FText.text = GetPointManager._flavorTextObject.GetFlavorText(GetPointManager._stageNum, this._status, _flavorIdx, this._myNoteType);
             }
         }
 
@@ -98,7 +101,7 @@ public class PointManager : MonoBehaviour
             if(_flavorTime >= 6.0f) {
                 _flavorTime = 0;
                 _flavorIdx = (_flavorIdx + 1) % 3;
-                FText.text = GetPointManager._flavorTextObject.GetFlavorText(0, this._status, _flavorIdx, this._myNoteType);
+                FText.text = GetPointManager._flavorTextObject.GetFlavorText(GetPointManager._stageNum, this._status, _flavorIdx, this._myNoteType);
             }
         }
     }
@@ -136,11 +139,19 @@ public class PointManager : MonoBehaviour
 
     void Start()
     {
+        _stageNum = PlayerPrefs.GetInt(Keys.KeyList[Keys.KeyTag.StageType], -1);
+        if (_stageNum == -1) {
+            _stageNum = 0;
+        }
+
         int i = 0;
         foreach(Transform t in transform) {
             _characters[i] = new Character(t, (NoteManager.NoteType)i);
             i++;
         }
+
+        NoteManager.GetNoteManager.InitializeNotemanager();
+        ResultWindowManager.GetResultWindowManger.InitializeResultWindow();
     }
 
     private bool _clear = false;
@@ -191,7 +202,7 @@ public class PointManager : MonoBehaviour
         if(data == null) {
             string filePath =  $"{Application.streamingAssetsPath}/SaveData.json";
             var group = new ResultObjectGroup();
-            group.ResultObjects.Add(new ResultObject(0, chara.MyNoteType, chara.PercentageVal));
+            group.ResultObjects.Add(new ResultObject(_stageNum, chara.MyNoteType, chara.PercentageVal));
             var dataAsJson = JsonUtility.ToJson(group);
             File.WriteAllText(filePath, dataAsJson);
             Debug.Log("Created new file");
@@ -199,13 +210,13 @@ public class PointManager : MonoBehaviour
         }
         else {
             ResultObject res;
-            if (data.ResultObjects.Any(result => result.Stage == 0)) {
-                res = data.ResultObjects.FirstOrDefault(r => r.Stage == 0);
+            if (data.ResultObjects.Any(result => result.Stage == _stageNum)) {
+                res = data.ResultObjects.FirstOrDefault(r => r.Stage == _stageNum);
                 res.Type = chara.MyNoteType;
                 res.Percentage = chara.PercentageVal;
             }
             else {
-                res = new ResultObject(0, chara.MyNoteType, chara.PercentageVal);
+                res = new ResultObject(_stageNum, chara.MyNoteType, chara.PercentageVal);
                 data.ResultObjects.Add(res);
             }
             var dataAsJson = JsonUtility.ToJson(data);
@@ -224,10 +235,11 @@ public class PointManager : MonoBehaviour
         _timerText.text = $"{minutes:00}:{Mathf.Floor(seconds):00}";
         _timerVal = (minutes * 60) + seconds;
         if(_timerVal <= 0) {
+            Time.timeScale = 0;
             _clear = true;
             var highestCharacter = _characters.Aggregate((x, y) => x.PercentageVal >= y.PercentageVal ? x : y);
             SaveData(highestCharacter);
-            ResultWindowManager.GetResultWindowManger.SetStageClearResultWindow(0, highestCharacter.MyNoteType);
+            ResultWindowManager.GetResultWindowManger.SetStageClearResultWindow(_stageNum, highestCharacter.MyNoteType);
             PlayerController.GetPlayer.SetClearStageWindow();
         }
 

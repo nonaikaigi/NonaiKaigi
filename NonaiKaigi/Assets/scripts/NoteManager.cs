@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class NoteManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class NoteManager : MonoBehaviour
     public static NoteManager GetNoteManager => _noteManager;
 
     [SerializeField] private GameObject _nodePrefab = null;
+    [SerializeField] private Sprite[] _noteSprites = null;
     //ノートを管理するためのリスト
     private List<NoteController> _noteList = new List<NoteController>();
 
@@ -28,11 +30,14 @@ public class NoteManager : MonoBehaviour
     [SerializeField] private AudioClip _audioClip = null;
     private AudioSource _audioSource = null;
 
-    private void Awake() {
-        _noteManager = this;
-        _moveSpeed = _noteSpeedObject.GetNoteSpeed(0).MoveSpeed;
+    public void InitializeNotemanager() {
+        _moveSpeed = _noteSpeedObject.GetNoteSpeed(PointManager.GetPointManager.StageNum).MoveSpeed;
         _audioSource = this.gameObject.AddComponent<AudioSource>();
         _audioSource.clip = _audioClip;
+    }
+
+    private void Awake() {
+        _noteManager = this;
     }
 
     [SerializeField] NoteSpeedObject _noteSpeedObject = null;
@@ -41,10 +46,10 @@ public class NoteManager : MonoBehaviour
 
     public void ChangeSpeed(bool raiseSpeed) {
         if (raiseSpeed) {
-            _moveSpeed += _noteSpeedObject.GetNoteSpeed(0).MoveSpeed * 0.25f;
+            _moveSpeed += _noteSpeedObject.GetNoteSpeed(PointManager.GetPointManager.StageNum).MoveSpeed * 0.25f;
         }
         else {
-            _moveSpeed -= _noteSpeedObject.GetNoteSpeed(0).MoveSpeed * 0.25f;
+            _moveSpeed -= _noteSpeedObject.GetNoteSpeed(PointManager.GetPointManager.StageNum).MoveSpeed * 0.25f;
         }
 
         _noteList.ForEach(note => note.ChangeSpeed(_moveSpeed));
@@ -52,7 +57,7 @@ public class NoteManager : MonoBehaviour
 
     void Update() {
         _generationTime += Time.deltaTime;
-        if(_generationTime >= _noteSpeedObject.GetNoteSpeed(0).GenerationSpeed) {
+        if(_generationTime >= _noteSpeedObject.GetNoteSpeed(PointManager.GetPointManager.StageNum).GenerationSpeed) {
             _generationTime = 0;
             Random.InitState(System.DateTime.Now.TimeOfDay.Milliseconds);
             var randomLane = Random.Range(0, (int)LaneType.MAX);
@@ -62,6 +67,7 @@ public class NoteManager : MonoBehaviour
             note.SetUpNote(
                 (LaneType)randomLane,   //LaneType
                 (NoteType)randomType,
+                _noteSprites[randomType],
                 _moveSpeed,                //Speed
                 new Vector2(_lanes[randomLane].position.x + _lanes[randomLane].rect.size.x / 2, _lanes[randomLane].position.y)      //Pos
                 );

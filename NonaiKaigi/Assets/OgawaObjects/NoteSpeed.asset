@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NoteSpeed
   m_EditorClassIdentifier: 
   _noteSpeed:
-  - MoveSpeed: 500
+  - MoveSpeed: 600
     GenerationSpeed: 1
   - MoveSpeed: 600
     GenerationSpeed: 0.8

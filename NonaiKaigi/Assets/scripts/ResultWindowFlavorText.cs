@@ -7,9 +7,9 @@ public class ResultWindowFlavorText : ScriptableObject
     [SerializeField]
     private List<ResultFlavorTextGroup> _resultFlavorTextGroup = new List<ResultFlavorTextGroup>();
 
-    public string GetProblemText(int i) => _resultFlavorTextGroup[i].ProblemText;
-    public string GetOptionText(int i, NoteManager.NoteType type) => _resultFlavorTextGroup[i].ResultFlavorTexts.Find(text => text.Type == type).OptionText;
-    public ResultFlavorText GetResult(int i, NoteManager.NoteType type) => _resultFlavorTextGroup[i].ResultFlavorTexts.Find(text => text.Type == type);
+    public string GetProblemText(int stageIdx) => _resultFlavorTextGroup[stageIdx].ProblemText;
+    public string GetOptionText(int stageIdx, NoteManager.NoteType type) => _resultFlavorTextGroup[stageIdx].ResultFlavorTexts.Find(text => text.Type == type).OptionText;
+    public ResultFlavorText GetResult(int stageIdx, NoteManager.NoteType type) => _resultFlavorTextGroup[stageIdx].ResultFlavorTexts.Find(text => text.Type == type);
 }
 
 [System.Serializable]
@@ -32,7 +32,4 @@ public class ResultFlavorText
     [SerializeField, Multiline]
     private string _resultText = null;
     public string ResultText => _resultText;
-    [SerializeField]
-    private Sprite _clearSprite = null;
-    public Sprite ClearSprite => _clearSprite;
 }
