@@ -100,7 +100,7 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
-        progress.ThisStoryProgress = Progress.StoryProgress.TextA;
+        //progress.ThisStoryProgress = Progress.StoryProgress.TextA;
         var data = PointManager.LoadSaveData().ResultObjects;
         int index = 0;
         switch (progress.ThisStoryProgress)
