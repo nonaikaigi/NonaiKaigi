@@ -137,6 +137,14 @@ public class PointManager : MonoBehaviour
         _pointManager = this;
     }
 
+    [SerializeField] private Canvas _howToCanvas = null;
+
+    public void ClearHowToCanvas() {
+        if (_stageNum == 0 && _howToCanvas.gameObject.activeSelf) {
+            _howToCanvas.gameObject.SetActive(false);
+        }
+    }
+
     void Start()
     {
         _stageNum = PlayerPrefs.GetInt(Keys.KeyList[Keys.KeyTag.StageType], -1);
@@ -152,6 +160,13 @@ public class PointManager : MonoBehaviour
 
         NoteManager.GetNoteManager.InitializeNotemanager();
         ResultWindowManager.GetResultWindowManger.InitializeResultWindow();
+
+        if(_stageNum == 0) {
+            PlayerController.GetPlayer.PauseGame();
+        }
+        else {
+            _howToCanvas.gameObject.SetActive(false);
+        }
     }
 
     private bool _clear = false;

@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
     private bool _isPaused = false;
     private bool _clearedStage = false;
 
+    public void PauseGame() {
+        _isPaused = true;
+        Time.timeScale = 0;
+    }
+
     public void SetClearStageWindow() {
         _clearedStage = true;
     }
@@ -57,6 +62,7 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 1;
                 _isPaused = false;
                 ResultWindowManager.GetResultWindowManger.ShowResultWindow(false);
+                PointManager.GetPointManager.ClearHowToCanvas();
             }
         }
 
