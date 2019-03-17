@@ -25,7 +25,6 @@ public class TextManager : MonoBehaviour
     [SerializeField] Image back;
     [SerializeField] Sprite[] backs = new Sprite[4];
 
-
     #region Mod
 
     [SerializeField] GameObject textPiece;
@@ -100,7 +99,7 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
-        progress.ThisStoryProgress = Progress.StoryProgress.TextA;
+        //progress.ThisStoryProgress = Progress.StoryProgress.TextA;
         var data = PointManager.LoadSaveData().ResultObjects;
         int index = 0;
         switch (progress.ThisStoryProgress)
@@ -143,6 +142,7 @@ public class TextManager : MonoBehaviour
             default:
                 break;
         }
+        back.color = Color.white;
 
     }
 
@@ -151,6 +151,32 @@ public class TextManager : MonoBehaviour
         back.sprite = backs[i];
     }
 
+    //BCA
+    //AAB
+    //CBC
+    static NoteManager.NoteType[] high = new NoteManager.NoteType[3] { NoteManager.NoteType.B, NoteManager.NoteType.C, NoteManager.NoteType.A };
+    static NoteManager.NoteType[] normal = new NoteManager.NoteType[3] { NoteManager.NoteType.A, NoteManager.NoteType.A, NoteManager.NoteType.B };
+    static NoteManager.NoteType[] low = new NoteManager.NoteType[3] { NoteManager.NoteType.C, NoteManager.NoteType.B, NoteManager.NoteType.C };
+
+    static int CheckResult(int wave, NoteManager.NoteType type)
+    {
+        if (high[wave] == type)
+        {
+            return 2;
+        }
+        if (normal[wave] == type)
+        {
+            return 1;
+        }
+        //if (low[wave] == type)
+        //{
+        return 0;
+        //}
+
+    }
+
+
+
 
     public static Progress.ChoiceTag GetResult()
     {
@@ -158,7 +184,7 @@ public class TextManager : MonoBehaviour
         int num = 0;
         foreach (var item in data)
         {
-            num += (int)item.Type;
+            num += CheckResult(item.Stage, item.Type);
         }
         if (4 <= num)
         {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PutSentence : MonoBehaviour
 {
     /// <summary>/// 文字送り速度/// </summary>
-    float charFeedSpeed = 0.1f;
+    const float charFeedSpeed = 0.1f;
     /// <summary>/// 表示用のTextComponent/// </summary>
     [SerializeField] Text text;
     /// <summary>/// /// </summary>

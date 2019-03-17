@@ -79,6 +79,7 @@ public class TextDirector : MonoBehaviour
 
     void Awake()
     {
+        blackOut.SetActive(false);
         SwitchColor(Color.black);
     }
 
@@ -86,7 +87,7 @@ public class TextDirector : MonoBehaviour
     {
         if (textManager.texts[0].cName != CharName.System)
         {
-            StartCoroutine(ChangeColor(blackOut, Color.clear, 0.5f, false));
+            StartCoroutine(ChangeColor(blackOut, Color.clear, 0f, false));
         }
     }
 
