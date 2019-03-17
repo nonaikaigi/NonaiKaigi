@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public enum CharName
 {
-    Lilia, Mother, Mob, System, None
+    Lilia, Mother, Sister, System, None
 }
 public class TextManager : MonoBehaviour
 {
@@ -259,31 +259,11 @@ public class TextManager : MonoBehaviour
             Debug.LogError("error");
             return;
         }
-        TextAsset textAsset = Instantiate((TextAsset)Resources.Load(filePath));
-        string textsJson = textAsset.text;
-        Debug.Log(textsJson);
-        string[] spritKey = { "><" };
-
-        string[] tmpTexts = textsJson.Split(spritKey, StringSplitOptions.None);
-        //Debug.Log(tmpTexts);
-        foreach (string s in tmpTexts)
+        Texts textAsset = Instantiate(Resources.Load<Texts>(filePath));
+        foreach (TextStorage s in textAsset.texts)
         {
-
-            //Debug.Log(s);
-            var sss = JsonUtility.FromJson<TextStorage>(s);
-            //Debug.Log(sss);   
-            if (sss.face == null || sss.face == "")
-            {
-                sss.face = FaceIndex.Last.ToString();
-            }
-            var tmpStorage = new TextStorage(JsonUtility.FromJson<TextStorage>(s));
-            //characters.Add(tmpStorage.cName);
-            //Debug.Log(tmpStorage);
-            texts.Add(tmpStorage);
-
+            texts.Add(s);
         }
-        //characters = characters.Distinct().Where(item => item <= CharName.Ixmagina).ToList();
-        //SetCharacter(characters);
     }
 
     #endregion

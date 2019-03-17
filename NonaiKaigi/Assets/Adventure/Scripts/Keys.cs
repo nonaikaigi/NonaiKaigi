@@ -12,6 +12,7 @@ public static class Keys
         ChoiceC,
         ChoiceD,
         End,
+        StageType,
         Miss,
     }
 
@@ -22,6 +23,7 @@ public static class Keys
         {KeyTag.ChoiceB,"ChoiceB" },
         {KeyTag.ChoiceC,"ChoiceC" },
         {KeyTag.ChoiceD,"ChoiceD" },
+        { KeyTag.StageType,"StageTag"},
         {KeyTag.End,"End" },
     };
 
