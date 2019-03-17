@@ -50,6 +50,7 @@ public class Progress : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt(Keys.KeyList[Keys.KeyTag.Progress], (int)value);
+            PlayerPrefs.Save();
         }
     }
     Dictionary<ChoicePhase, Keys.KeyTag> Ckeys = new Dictionary<ChoicePhase, Keys.KeyTag>()
@@ -70,6 +71,7 @@ public class Progress : MonoBehaviour
         key = Ckeys[phase];
 
         PlayerPrefs.SetInt(Keys.KeyList[key], (int)tag);
+        PlayerPrefs.Save();
         choiceTags[(int)phase] = tag;
     }
     /// <summary>特定の会議の結果を取得する</summary>

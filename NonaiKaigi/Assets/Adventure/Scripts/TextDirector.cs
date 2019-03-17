@@ -10,6 +10,10 @@ public enum StageType
 {
     /// <summary>シーン遷移</summary>
     SceneTrans,
+    /// <summary>移動</summary>
+    Move,
+    /// <summary>キャラ揺れる</summary>
+    Shake,
     /// <summary>画面の色変更</summary>
     Coloring,
     /// <summary>画面の色変更解除</summary>
@@ -46,7 +50,10 @@ public class TextDirector : MonoBehaviour
     [SerializeField] GameObject blackOut;
     //[SerializeField] GameObject[] popWindows;
     //[SerializeField] Transform popCanvas;
-    [SerializeField] SpriteRenderer backGround;
+    [SerializeField] Image backGround;
+
+    [SerializeField] Sprite[] BackSprites = new Sprite[4];
+
 
     SceneChanger fader;
     float moveTime = 0.5f;
@@ -66,6 +73,16 @@ public class TextDirector : MonoBehaviour
     public List<Cast> casts = new List<Cast>();
 
 
+
+
+
+    void Start()
+    {
+        blackOut.SetActive(false);
+    }
+
+
+
     void DivideContent(string content)
     {
         //string[] tmpTexts = content.Split(':');
@@ -75,15 +92,105 @@ public class TextDirector : MonoBehaviour
 
     public void Staging(string content)
     {
+        Debug.Log(content);
+        textManager.isStaging = true;
         DivideContent(content);
         //StageType type;
 
         if (Enum.TryParse(contents[(int)StageTag.Type], out StageType type))
         {
-
+            switch (type)
+            {
+                case StageType.SceneTrans:
+                    SceneTrans(contents[(int)StageTag.Target]);
+                    break;
+                case StageType.Move:
+                    Move(contents[(int)StageTag.Target]);
+                    break;
+                case StageType.Shake:
+                    Shake();
+                    break;
+                case StageType.Coloring:
+                    Coloring(contents[(int)StageTag.Target]);
+                    break;
+                case StageType.Clear:
+                    Clear();
+                    break;
+                case StageType.SwitchBack:
+                    SwitchBack(contents[(int)StageTag.Target]);
+                    break;
+                case StageType.PopWindow:
+                    PopWindow(contents[(int)StageTag.Target]);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
+
+    void SceneTrans(string content)
+    {
+
+        Debug.Log(content);
+        EndStaging();
+    }
+    void Move(string content)
+    {
+
+        Debug.Log(content);
+        EndStaging();
+    }
+    void Shake()
+    {
+
+        Debug.Log("shake");
+        EndStaging();
+    }
+    /// <summary>カラーコード</summary>
+    /// <param name="content"></param>
+    void Coloring(string content)
+    {
+        Debug.Log(content);
+        Color color;
+        if (ColorUtility.TryParseHtmlString(content, out color))
+        {
+            Debug.Log(color);
+            StartCoroutine(ChangeColor(blackOut, color, 0.5f));
+
+        }
+    }
+    void Coloring(Color color)
+    {
+        StartCoroutine(ChangeColor(blackOut, color, 0.5f));
+    }
+    void Clear()
+    {
+        StartCoroutine(ChangeColor(blackOut, Color.clear, 0.5f));
+    }
+    void SwitchBack(string content)
+    {
+        Debug.Log(content);
+        BackIndex index;
+        if (Enum.TryParse(content, out index))
+        {
+            backGround.sprite = BackSprites[(int)index];
+        }
+        EndStaging();
+    }
+    void PopWindow(string content)
+    {
+
+        Debug.Log(content);
+        EndStaging();
+    }
+
+
+
+
+
+
+
 
 
     IEnumerator MoveObject(GameObject targetObj, Vector3 targetPos, float time, bool isNext = true)
@@ -128,6 +235,7 @@ public class TextDirector : MonoBehaviour
         //else 
         if (targetObject.GetComponent<Image>())
         {
+            targetObject.SetActive(true);
             fromColor = targetObject.GetComponent<Image>().color;
         }
         else
@@ -146,12 +254,16 @@ public class TextDirector : MonoBehaviour
             fromColor.g += diffG * Time.deltaTime / time;
             fromColor.b += diffB * Time.deltaTime / time;
             fromColor.a += diffA * Time.deltaTime / time;
-            targetObject.GetComponent<SpriteRenderer>().color = fromColor;
+            targetObject.GetComponent<Image>().color = fromColor;
             Debug.Log(fromColor);
             yield return null;
         }
         Debug.Log("end");
-        targetObject.GetComponent<SpriteRenderer>().color = toColor;
+        targetObject.GetComponent<Image>().color = toColor;
+        if (toColor == Color.clear)
+        {
+            targetObject.SetActive(false);
+        }
         if (isNext)
         {
             EndStaging();
@@ -165,14 +277,15 @@ public class TextDirector : MonoBehaviour
 
     void EndStaging()
     {
+        Debug.Log("EndStaging");
         textManager.isStaging = false;
-        //textManager.TextsDraw();
+        textManager.TextDraw();
     }
 
-    void ContinueStaging()
-    {
-        textManager.isStaging = true;
-    }
+    //void ContinueStaging()
+    //{
+    //    textManager.isStaging = true;
+    //}
 
 }
 
