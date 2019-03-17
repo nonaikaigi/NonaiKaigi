@@ -15,10 +15,8 @@ MonoBehaviour:
   id: 0
   name: "\u30EA\u30EA\u30A2"
   faces:
-  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 9cbdd7da0d4ca574d8491bde29919f29, type: 3}
+  - {fileID: 21300000, guid: 3c02840f9763d434ead9d9b366f1cdfd, type: 3}
+  - {fileID: 21300000, guid: 4f42c3dc4a647ae489f9a6c0b0af0274, type: 3}
+  - {fileID: 21300000, guid: b13cb0e17bca1fa4ca19de460fb5f690, type: 3}
   index: 0

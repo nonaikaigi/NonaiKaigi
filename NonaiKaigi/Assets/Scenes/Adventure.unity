@@ -207,12 +207,10 @@ MonoBehaviour:
   charName: 0
   facer: 0
   faceSprites:
-  - {fileID: 21300000, guid: cb4fb3c64ad63dd438b95cfa57874dd3, type: 3}
-  - {fileID: 21300000, guid: 95cc332ba31408b4482d060168170bca, type: 3}
-  - {fileID: 21300000, guid: 73aec7b1f1acbc54e8bb80e1e7de7f80, type: 3}
-  - {fileID: 21300000, guid: 4499ae13b727c6f49b02f3921a2872d1, type: 3}
-  - {fileID: 21300000, guid: 105b7ca974fb58d4f9c1a7eeda4c3ed2, type: 3}
-  - {fileID: 21300000, guid: 4499ae13b727c6f49b02f3921a2872d1, type: 3}
+  - {fileID: 21300000, guid: 9cbdd7da0d4ca574d8491bde29919f29, type: 3}
+  - {fileID: 21300000, guid: 3c02840f9763d434ead9d9b366f1cdfd, type: 3}
+  - {fileID: 21300000, guid: 4f42c3dc4a647ae489f9a6c0b0af0274, type: 3}
+  - {fileID: 21300000, guid: b13cb0e17bca1fa4ca19de460fb5f690, type: 3}
   myFace: {fileID: 156225110}
 --- !u!114 &156225110
 MonoBehaviour:
@@ -1197,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682765786dfd744b2e748d57718954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texts: []
   nameText: {fileID: 947415433}
   progress: {fileID: 1195440992}
   putSentence: {fileID: 1195440993}

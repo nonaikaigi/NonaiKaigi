@@ -15,7 +15,7 @@ public class TextManager : MonoBehaviour
 {
     //List<CharName> characters = new List<CharName>();
 
-    List<TextStorage> texts = new List<TextStorage>();
+    public List<TextStorage> texts = new List<TextStorage>();
 
     [SerializeField] Text nameText;
     [SerializeField] Progress progress;
@@ -97,14 +97,19 @@ public class TextManager : MonoBehaviour
     float stime = 0;
     float ftime = 0;
 
+    private void Awake()
+    {
+        SetText(progress.ThisStoryProgress);
+
+    }
     void Start()
     {
         logs.Clear();
         logPanel.SetActive(false);
         actors = Resources.LoadAll<TextActor>("CharacterAsset").ToList();
-        SetText(progress.ThisStoryProgress);
         //putSentence.CallSentence(texts[0].sentence, GetName(texts[0]));   
         TextDraw();
+
     }
 
 
