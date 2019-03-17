@@ -55,24 +55,59 @@ public class NoteManager : MonoBehaviour
         _noteList.ForEach(note => note.ChangeSpeed(_moveSpeed));
     }
 
+    private void GenerateNote(int laneType, int noteType) {
+        var note = GameObject.Instantiate(_nodePrefab, this.transform, true).GetComponent<NoteController>();
+        note.SetUpNote(
+            (LaneType)laneType,   //LaneType
+            (NoteType)noteType,
+            _noteSprites[noteType],
+            _moveSpeed,                //Speed
+            new Vector2(_lanes[laneType].position.x + _lanes[laneType].rect.size.x / 2, _lanes[laneType].position.y)      //Pos
+            );
+
+        _noteList.Add(note);
+    }
+
     void Update() {
         _generationTime += Time.deltaTime;
         if(_generationTime >= _noteSpeedObject.GetNoteSpeed(PointManager.GetPointManager.StageNum).GenerationSpeed) {
             _generationTime = 0;
             Random.InitState(System.DateTime.Now.TimeOfDay.Milliseconds);
-            var randomLane = Random.Range(0, (int)LaneType.MAX);
-            Random.InitState(System.DateTime.Now.TimeOfDay.Seconds);
-            var randomType = Random.Range(0, (int)NoteType.MAX);
-            var note = GameObject.Instantiate(_nodePrefab, this.transform, true).GetComponent<NoteController>();
-            note.SetUpNote(
-                (LaneType)randomLane,   //LaneType
-                (NoteType)randomType,
-                _noteSprites[randomType],
-                _moveSpeed,                //Speed
-                new Vector2(_lanes[randomLane].position.x + _lanes[randomLane].rect.size.x / 2, _lanes[randomLane].position.y)      //Pos
-                );
-
-            _noteList.Add(note);
+            var noteNumRand = Random.Range(0, 100);
+            var nList = new List<int>();
+            //ノートが1つのパターン
+            if (noteNumRand <= 70) {
+                var randomLane = Random.Range(0, (int)LaneType.MAX);
+                Random.InitState(System.DateTime.Now.TimeOfDay.Seconds);
+                var randomNote = Random.Range(0, (int)NoteType.MAX);
+                GenerateNote(randomLane, randomNote);
+            }
+            //ノートが2つのパターン
+            else if (noteNumRand <= 90) {
+                Random.InitState(System.DateTime.Now.Millisecond);
+                var rand = Random.Range(0, 3);
+                Random.InitState(System.DateTime.Now.Second);
+                var rand1 = Random.Range(0, 3);
+                Random.InitState((int)System.DateTime.UtcNow.Ticks);
+                var rand2 = Random.Range(0, 3);
+                if (rand == 0) {             //上中パターン
+                    GenerateNote(0, rand1);
+                    GenerateNote(1, rand2);
+                }
+                else if (rand == 1) {        //上下パターン
+                    GenerateNote(0, rand1);
+                    GenerateNote(2, rand2);
+                }
+                else {                      //中下パターン
+                    GenerateNote(1, rand1);
+                    GenerateNote(2, rand2);
+                }
+            }
+            else {              //ノートが3つのパターン
+                for (int i = 0; i < 3; i++) {
+                    GenerateNote(i, i);
+                }
+            }
         }
 
         var destroylist = new List<NoteController>();

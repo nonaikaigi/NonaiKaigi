@@ -237,7 +237,7 @@ public class PointManager : MonoBehaviour
         if(_timerVal <= 0) {
             Time.timeScale = 0;
             _clear = true;
-            var highestCharacter = _characters.Aggregate((x, y) => x.PercentageVal >= y.PercentageVal ? x : y);
+            var highestCharacter = _characters.FirstOrDefault(chara => chara.MyNoteType == ResultWindowManager.GetResultWindowManger.GetWorstCharacterType(_stageNum));
             SaveData(highestCharacter);
             ResultWindowManager.GetResultWindowManger.SetStageClearResultWindow(_stageNum, highestCharacter.MyNoteType);
             PlayerController.GetPlayer.SetClearStageWindow();

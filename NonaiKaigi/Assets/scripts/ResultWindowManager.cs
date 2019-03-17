@@ -12,6 +12,8 @@ public class ResultWindowManager : MonoBehaviour
     [SerializeField] private Text _textBox = null;
     [SerializeField] private ResultWindowFlavorText _resultWindowFlavorText = null;
 
+    public NoteManager.NoteType GetWorstCharacterType(int stageIdx) => _resultWindowFlavorText.GetWorstType(stageIdx);
+
     public void ShowResultWindow(bool show) {
         gameObject.SetActive(show);
     }

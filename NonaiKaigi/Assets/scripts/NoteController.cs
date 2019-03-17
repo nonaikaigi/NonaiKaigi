@@ -27,15 +27,6 @@ public class NoteController : MonoBehaviour
 
         var image = GetComponent<Image>();
         image.sprite = sprite;
-        if(note == NoteManager.NoteType.A) {
-            image.color = Color.white;
-        }
-        else if(note == NoteManager.NoteType.B) {
-            image.color = new Color(1, 0.68f, 0, 1);
-        }
-        else {
-            image.color = new Color(0.0172f, 1, 0, 1);
-        }
 
         _speed = spd;
         transform.position = pos;
