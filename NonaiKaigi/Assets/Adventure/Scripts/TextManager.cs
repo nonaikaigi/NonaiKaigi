@@ -25,6 +25,8 @@ public class TextManager : MonoBehaviour
     [SerializeField] Image back;
     [SerializeField] Sprite[] backs = new Sprite[4];
 
+    [SerializeField] GameObject enter;
+
     #region Mod
 
     [SerializeField] GameObject textPiece;
@@ -213,6 +215,14 @@ public class TextManager : MonoBehaviour
 
     void Update()
     {
+        if (putSentence.End)
+        {
+            enter.SetActive(true);
+        }
+        else
+        {
+            enter.SetActive(false);
+        }
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (logPanel.activeSelf == true)

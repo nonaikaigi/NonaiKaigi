@@ -23,5 +23,5 @@ MonoBehaviour:
     sentence: "\u660E\u65E5\u306F\u3082\u3063\u3068\u305F\u306E\u3057\u304F\u3059\u308B\u3093\u3060\u304B\u3089\uFF01"
     faceIndex: 3
   - cName: 3
-    sentence: SceneTrans:Ending
+    sentence: NextScene
     faceIndex: 0
