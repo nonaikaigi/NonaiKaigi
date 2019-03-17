@@ -99,9 +99,65 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
-        SetText(progress.ThisStoryProgress);
+        var data = PointManager.LoadSaveData().ResultObjects;
+        int index = 0;
+        switch (progress.ThisStoryProgress)
+        {
+            case Progress.StoryProgress.TextA:
+                SetText(progress.ThisStoryProgress);
+                break;
+            case Progress.StoryProgress.ResultA:
+                index = (int)data.Find(x => x.Stage == 0).Type;
+                SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                break;
+            case Progress.StoryProgress.TextB:
+                SetText(progress.ThisStoryProgress);
+                break;
+            case Progress.StoryProgress.ResultB:
+                index = (int)data.Find(x => x.Stage == 1).Type;
+                SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                break;
+            case Progress.StoryProgress.TextC:
+                SetText(progress.ThisStoryProgress);
+                break;
+            case Progress.StoryProgress.ResultC:
+                index = (int)data.Find(x => x.Stage == 2).Type;
+                SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                break;
+            case Progress.StoryProgress.TextEnd:
+                SetText(progress.ThisStoryProgress);
+                break;
+            case Progress.StoryProgress.ResultEnd:
+                SetText(progress.ThisStoryProgress, GetResult());
+                break;
+            default:
+                break;
+        }
 
     }
+
+    Progress.ChoiceTag GetResult()
+    {
+        var data = PointManager.LoadSaveData().ResultObjects;
+        int num = 0;
+        foreach (var item in data)
+        {
+            num += (int)item.Type;
+        }
+        if (4 <= num)
+        {
+            return Progress.ChoiceTag.A;
+        }
+        else if (num >= 1)
+        {
+            return Progress.ChoiceTag.C;
+        }
+        else
+        {
+            return Progress.ChoiceTag.B;
+        }
+    }
+
     void Start()
     {
         logs.Clear();

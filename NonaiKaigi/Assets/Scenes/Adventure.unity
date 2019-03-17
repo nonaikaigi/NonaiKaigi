@@ -1248,6 +1248,7 @@ MonoBehaviour:
   textManager: {fileID: 1195440991}
   blackOut: {fileID: 997090302}
   backGround: {fileID: 1029060845}
+  progress: {fileID: 1195440992}
   BackSprites:
   - {fileID: 0}
   - {fileID: 0}
