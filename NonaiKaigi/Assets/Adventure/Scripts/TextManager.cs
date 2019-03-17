@@ -22,7 +22,8 @@ public class TextManager : MonoBehaviour
     [SerializeField] PutSentence putSentence;
     [SerializeField] FaceChanger faceChanger;
     [SerializeField] TextDirector director;
-
+    [SerializeField] Image back;
+    [SerializeField] Sprite[] backs = new Sprite[4];
 
 
     #region Mod
@@ -99,36 +100,45 @@ public class TextManager : MonoBehaviour
 
     private void Awake()
     {
+        progress.ThisStoryProgress = Progress.StoryProgress.TextA;
         var data = PointManager.LoadSaveData().ResultObjects;
         int index = 0;
         switch (progress.ThisStoryProgress)
         {
             case Progress.StoryProgress.TextA:
                 SetText(progress.ThisStoryProgress);
+                SwitchBack(0);
                 break;
             case Progress.StoryProgress.ResultA:
                 index = (int)data.Find(x => x.Stage == 0).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                SwitchBack(0);
                 break;
             case Progress.StoryProgress.TextB:
                 SetText(progress.ThisStoryProgress);
+                SwitchBack(1);
                 break;
             case Progress.StoryProgress.ResultB:
                 index = (int)data.Find(x => x.Stage == 1).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                SwitchBack(1);
                 break;
             case Progress.StoryProgress.TextC:
                 SetText(progress.ThisStoryProgress);
+                SwitchBack(2);
                 break;
             case Progress.StoryProgress.ResultC:
                 index = (int)data.Find(x => x.Stage == 2).Type;
                 SetText(progress.ThisStoryProgress, (Progress.ChoiceTag)index);
+                SwitchBack(2);
                 break;
             case Progress.StoryProgress.TextEnd:
                 SetText(progress.ThisStoryProgress);
+                SwitchBack(3);
                 break;
             case Progress.StoryProgress.ResultEnd:
                 SetText(progress.ThisStoryProgress, GetResult());
+                SwitchBack(3);
                 break;
             default:
                 break;
@@ -136,7 +146,13 @@ public class TextManager : MonoBehaviour
 
     }
 
-    Progress.ChoiceTag GetResult()
+    void SwitchBack(int i)
+    {
+        back.sprite = backs[i];
+    }
+
+
+    public static Progress.ChoiceTag GetResult()
     {
         var data = PointManager.LoadSaveData().ResultObjects;
         int num = 0;
