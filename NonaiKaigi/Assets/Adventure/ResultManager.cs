@@ -9,6 +9,9 @@ public class ResultManager : MonoBehaviour
     [SerializeField] FaceChanger flame;
     [SerializeField] Image[] icons = new Image[2];
     [SerializeField] Text comment;
+
+    [SerializeField] AudioSource source;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +37,7 @@ public class ResultManager : MonoBehaviour
         flame.ChangeFace(FaceIndex.Fun);
         icons[0].gameObject.SetActive(true);
         icons[1].gameObject.SetActive(false);
-        comment.text = "すっごくよくねむれた・・・";
+        comment.text = "すっごくよくねむれた";
     }
     void Normal()
     {
