@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
         if (_clearedStage) {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 //Load Scene
+                Time.timeScale = 1;
                 SceneChanger.SceneChange(SceneChanger.SceneTitle.Adventure);
             }
             return;

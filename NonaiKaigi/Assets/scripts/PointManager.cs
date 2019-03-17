@@ -237,7 +237,15 @@ public class PointManager : MonoBehaviour
         if(_timerVal <= 0) {
             Time.timeScale = 0;
             _clear = true;
-            var highestCharacter = _characters.FirstOrDefault(chara => chara.MyNoteType == ResultWindowManager.GetResultWindowManger.GetWorstCharacterType(_stageNum));
+            Character highestCharacter;
+            if (_characters[0].PercentageVal == _characters[1].PercentageVal && 
+                _characters[0].PercentageVal == _characters[2].PercentageVal && 
+                _characters[1].PercentageVal == _characters[2].PercentageVal) {
+                highestCharacter = _characters.FirstOrDefault(chara => chara.MyNoteType == ResultWindowManager.GetResultWindowManger.GetWorstCharacterType(_stageNum));
+            }
+            else {
+                highestCharacter = _characters.Aggregate((x, y) => x.PercentageVal >= y.PercentageVal ? x : y);
+            }
             SaveData(highestCharacter);
             ResultWindowManager.GetResultWindowManger.SetStageClearResultWindow(_stageNum, highestCharacter.MyNoteType);
             PlayerController.GetPlayer.SetClearStageWindow();
